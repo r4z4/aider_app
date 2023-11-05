@@ -6,6 +6,8 @@ pub struct AuthorizedUser {
     // Define your struct fields here
 }
 
+// Begin review
+
 lazy_static! {
     pub static ref RE_USERNAME: Regex = Regex::new(r"^[a-zA-Z0-9]{4,}$").unwrap();
     pub static ref RE_SPECIAL_CHAR: Regex = Regex::new("^.*?[@$!%*?&].*$").unwrap();
@@ -49,6 +51,8 @@ pub struct Post {
     pub date: String,
     pub body: String,
 }
+
+// End review
 
 
 pub fn authorize_user(req: &HttpRequest) -> Option<AuthorizedUser> {
