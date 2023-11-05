@@ -45,9 +45,9 @@ pub struct FormErrorResponse {
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct Post {
-    pub slug: String,
-    pub title: String,
-    pub author: String,
+    pub slug: String
+    pub title: String
+    pub author: String
     pub date: String,
     pub body: String,
 }
