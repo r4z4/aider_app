@@ -1,9 +1,33 @@
-fn main() {
-    // Create a very basic HTTP web server using actix_web that will connect to a postgres database instance
-    
-    // 1. Set up a postgres database connection using the credentials of PG_USER = postgres and PG_PASS = postgres and PG_DATABASE = aider_app
-    // 2. In the main function, be sure to set up a AppData struct for our database config. It will be of type web::Data::new() and then it will pass whatever our struct name is
-    // 3. Create one route at /index and for now just have it be a todo() that I can fill in later.
+use actix_web::{web, App, HttpResponse, HttpServer};
 
-    println!("Hello, world!");
+struct AppData {
+    // Define your struct fields here
+}
+
+async fn index() -> HttpResponse {
+    // Implement your logic for the /index route here
+    HttpResponse::Ok().body("Hello, world!")
+}
+
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    // Set up a postgres database connection using the credentials of PG_USER = postgres and PG_PASS = postgres and PG_DATABASE = aider_app
+    let pg_user = "postgres";
+    let pg_pass = "postgres";
+    let pg_database = "aider_app";
+
+    // Create a web::Data instance for the database config
+    let app_data = web::Data::new(AppData {
+        // Initialize your struct fields here
+    });
+
+    // Start the HTTP server
+    HttpServer::new(move || {
+        App::new()
+            .app_data(app_data.clone())
+            .route("/index", web::get().to(index))
+    })
+    .bind("127.0.0.1:8080")?
+    .run()
+    .await
 }
