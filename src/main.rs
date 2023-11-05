@@ -1,8 +1,10 @@
 use actix_web::{web, App, HttpResponse, HttpServer};
 use handlebars::Handlebars;
 use crate::config::authorize_user;
+use crate::handlebars_helpers::to_title_case;
 
 mod config;
+mod handlebars_helpers;
 
 struct AppData {
     // Define your struct fields here
@@ -30,6 +32,9 @@ async fn main() -> std::io::Result<()> {
     let mut hb = Handlebars::new();
     hb.register_templates_directory(".hbs", "./templates")
         .unwrap();
+    
+    // Register the handlebars helper function
+    hb.register_helper("to_title_case", Box::new(to_title_case));
 
     // Start the HTTP server
     HttpServer::new(move || {
