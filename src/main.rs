@@ -1,4 +1,7 @@
 use actix_web::{web, App, HttpResponse, HttpServer};
+use crate::config::authorize_user;
+
+mod config;
 
 struct AppData {
     // Define your struct fields here
