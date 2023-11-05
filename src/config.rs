@@ -6,8 +6,6 @@ pub struct AuthorizedUser {
     // Define your struct fields here
 }
 
-// Begin review
-
 lazy_static! {
     pub static ref RE_USERNAME: Regex = Regex::new(r"^[a-zA-Z0-9]{4,}$").unwrap();
     pub static ref RE_SPECIAL_CHAR: Regex = Regex::new("^.*?[@$!%*?&].*$").unwrap();
@@ -45,15 +43,12 @@ pub struct FormErrorResponse {
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
 pub struct Post {
-    pub slug: String
-    pub title: String
-    pub author: String
+    pub slug: String,
+    pub title: String,
+    pub author: String,
     pub date: String,
     pub body: String,
 }
-
-// End review
-
 
 pub fn authorize_user(req: &HttpRequest) -> Option<AuthorizedUser> {
     // Implement your logic to validate the user cookie and make a call to the postgres database instance
