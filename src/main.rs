@@ -1,4 +1,5 @@
 use actix_web::{web, App, HttpResponse, HttpServer};
+use handlebars::Handlebars;
 use crate::config::authorize_user;
 
 mod config;
@@ -7,9 +8,10 @@ struct AppData {
     // Define your struct fields here
 }
 
-async fn index() -> HttpResponse {
+async fn index(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
     // Implement your logic for the /index route here
-    HttpResponse::Ok().body("Hello, world!")
+    let body = hb.render("index", &()).unwrap();
+    HttpResponse::Ok().body(body)
 }
 
 #[actix_web::main]
@@ -24,10 +26,16 @@ async fn main() -> std::io::Result<()> {
         // Initialize your struct fields here
     });
 
+    // Initialize Handlebars and register the template directory
+    let mut hb = Handlebars::new();
+    hb.register_templates_directory(".hbs", "./templates")
+        .unwrap();
+
     // Start the HTTP server
     HttpServer::new(move || {
         App::new()
             .app_data(app_data.clone())
+            .app_data(web::Data::new(hb.clone()))
             .route("/index", web::get().to(index))
     })
     .bind("127.0.0.1:8080")?
