@@ -1,3 +1,5 @@
+// config.rs
+
 use actix_web::HttpRequest;
 
 pub struct AuthorizedUser {
