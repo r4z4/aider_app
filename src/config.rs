@@ -2,6 +2,7 @@
 
 use actix_web::HttpRequest;
 use regex::Regex;
+use actix_web::Responder;
 
 pub struct AuthorizedUser {
     // Define your struct fields here

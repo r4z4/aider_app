@@ -2,6 +2,7 @@ use actix_web::{web, App, HttpResponse, HttpServer};
 use handlebars::Handlebars;
 use crate::config::authorize_user;
 use crate::handlebars_helpers::to_title_case;
+use actix_web::Responder;
 
 mod config;
 mod handlebars_helpers;
@@ -10,7 +11,7 @@ struct AppData {
     // Define your struct fields here
 }
 
-async fn index(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
+async fn index(hb: web::Data<Handlebars<'_>>) -> impl Responder {
     // Implement your logic for the /index route here
     let body = hb.render("index", &()).unwrap();
     HttpResponse::Ok().body(body)
