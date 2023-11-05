@@ -1,40 +1,6 @@
 use std::env;
 
-use actix_files::Files;
-use actix_web::{
-    get,
-    http::header::{Header, HeaderValue},
-    post,
-    web::{self, post, Data},
-    App, HttpRequest, HttpResponse, HttpServer, Responder,
-};
-use config::{Post, VULGAR_LIST, is_dirty};
-use dotenv::dotenv;
-use handlebars::Handlebars;
-use hbs_helpers::{
-    attachments_rte, concat_args, concat_str_args, form_rte, get_search_rte, get_table_title,
-    int_eq, int_in, loc_vec_len_ten, lower_and_single, str_eq, to_title_case, sort_rte, get_list_view
-};
-use validator::{Validate, ValidationError};
-use models::{
-    model_admin::AdminUserList, model_consultant::ResponseConsultant, model_location::LocationList,
-};
 use serde::{Deserialize, Serialize};
-use serde_json::json;
-use sqlx::{postgres::PgPoolOptions, FromRow, Pool, Postgres};
-
-use crate::config::{mock_fixed_table_data, validate_and_get_user, ValidationResponse, get_ip};
-
-use scopes::{
-    admin::admin_scope, auth::auth_scope, client::client_scope, consult::consult_scope,
-    consultant::consultant_scope, location::location_scope, user::user_scope,
-};
-mod config;
-mod hbs_helpers;
-mod models;
-mod scopes;
-#[cfg(test)]
-mod test_common;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum Entity {
