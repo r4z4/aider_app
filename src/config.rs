@@ -1,6 +1,7 @@
 // config.rs
 
 use actix_web::HttpRequest;
+use regex::Regex;
 
 pub struct AuthorizedUser {
     // Define your struct fields here
